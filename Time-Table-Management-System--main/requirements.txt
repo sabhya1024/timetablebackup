@@ -1,0 +1,127 @@
+Project Title:
+Time Table Management System
+
+
+System Entities & Description
+
+
+1. Student
+- student_id (Primary Key)
+- name
+- roll_number
+- email
+- phone
+- department
+- semester
+- section
+- class_id (Foreign Key)
+
+Purpose:
+Stores student information and links students to their respective class/section.
+
+
+2. Teacher
+- teacher_id (Primary Key)
+- name
+- email
+- phone
+- department
+- designation
+
+Purpose:
+Stores faculty details and maps teachers to subjects and time slots.
+
+
+
+3. Subject
+- subject_id (Primary Key)
+- subject_name
+- subject_code
+- credits
+- department
+- semester
+
+Purpose:
+Represents academic subjects taught in the institution.
+
+
+
+4. Class / Section
+- class_id (Primary Key)
+- class_name
+- department
+- semester
+- section
+- strength
+
+Purpose:
+Defines a group of students for which a timetable is generated.
+
+
+
+5. Room
+- room_id (Primary Key)
+- room_number
+- building_name
+- capacity
+- room_type (Lecture/Lab)
+
+Purpose:
+Stores classroom and laboratory details for scheduling.
+
+
+
+6. Time Slot
+- slot_id (Primary Key)
+- day_of_week
+- start_time
+- end_time
+
+Purpose:
+Defines available time periods for lectures or labs.
+
+
+
+7. Timetable
+- timetable_id (Primary Key)
+- class_id (Foreign Key)
+- subject_id (Foreign Key)
+- teacher_id (Foreign Key)
+- room_id (Foreign Key)
+- slot_id (Foreign Key)
+
+Purpose:
+Core entity that maps classes, subjects, teachers, rooms, and time slots.
+
+
+
+8. User (Authentication)
+- user_id (Primary Key)
+- username
+- password
+- role (Admin/Teacher/Student)
+- reference_id (Teacher_ID or Student_ID)
+
+Purpose:
+Handles authentication and role-based access control.
+
+
+
+Relationships Summary:
+- One Class has many Students (1:N)
+- One Teacher can teach multiple Subjects (M:N)
+- One Subject can be taught to multiple Classes (M:N)
+- One Room can host many Timetable entries (1:N)
+- One Time Slot can be assigned to multiple classes (1:N)
+- Timetable resolves all many-to-many relationships
+
+
+Constraints & DBMS Logic:
+- Unique constraint on (room_id, slot_id) to avoid room clashes
+- Unique constraint on (teacher_id, slot_id) to avoid teacher clashes
+- Trigger to prevent overlapping schedules
+- Stored procedure to auto-generate timetable
+- Views for:
+   Student Timetable View
+   Teacher Timetable View
+   Admin Master Timetable View
